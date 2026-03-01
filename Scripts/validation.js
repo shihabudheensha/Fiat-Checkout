@@ -33,21 +33,67 @@
         return true;
     }
     function validateCardNumber() {
-        let value = $("#cardNumber").val().replace(/\s/g, "");
+        let input = $("#cardNumber");
+        let value = input.val().replace(/\s/g, ""); // remove spaces
 
+        
         if (value === "") {
             showError("#cardNumber", "Card number is required");
             return false;
         }
 
-        if (!/^\d{16}$/.test(value)) {
-            showError("#cardNumber", "Card number must be 16 digits");
+        if (!/^\d+$/.test(value)) {
+            showError("#cardNumber", "Only numbers allowed");
+            return false;
+        }
+
+        // Allow 15 (Amex) or 16 digits
+        if (!(value.length === 16 || value.length === 15)) {
+            showError("#cardNumber", "Invalid card number length");
+            return false;
+        }
+
+        // Luhn Check
+        if (!luhnCheck(value)) {
+            showError("#cardNumber", "Invalid card number");
             return false;
         }
 
         clearError("#cardNumber");
         return true;
     }
+    function luhnCheck(num) {
+
+        let arr = num.split("").reverse().map(x => parseInt(x));
+        let sum = 0;
+
+        for (let i = 0; i < arr.length; i++) {
+
+            let digit = arr[i];
+
+            if (i % 2 !== 0) {
+                digit *= 2;
+                if (digit > 9) digit -= 9;
+            }
+
+            sum += digit;
+        }
+
+        return sum % 10 === 0;
+    }
+    function formatCardNumber() {
+
+
+        let value = $("#cardNumber").val();
+
+        value = value.replace(/\D/g, "");
+        value = value.substring(0, 16);
+        value = value.replace(/(.{4})/g, "$1 ").trim();
+
+        $("#cardNumber").val(value);
+    }
+
+
     function validateExpiry() {
         let value = $("#expiryDate").val();
 
@@ -96,15 +142,12 @@
 
 
     $("#cardholderName").on("blur", validateCardholder);
-    $("#cardholderName").on("input", validateCardholder);
 
     $("#cardNumber").on("blur", validateCardNumber);
-    $("#cardNumber").on("input", validateCardNumber);
+    $("#cardNumber").on("input", formatCardNumber);
 
     $("#expiryDate").on("blur", validateExpiry);
-    $("#expiryDate").on("input", validateExpiry);
-
     $("#cvv").on("blur", validateCVV);
-    $("#cvv").on("input", validateCVV);
+    
 
 });
