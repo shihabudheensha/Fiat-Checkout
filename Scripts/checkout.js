@@ -15,11 +15,30 @@
         let v3 = validateExpiry();
         let v4 = validateCVV();
 
-        let isValid = v1 && v2 && v3 && v4;
+        if (!(v1 && v2 && v3 && v4)) return;
 
-        if (!isValid) {
-            e.preventDefault();
-        }
+        let btn = $("#paymentBtn");
+
+        // Loading state
+        btn.addClass("loading");
+        btn.prop("disabled", true);
+        btn.find(".loader").show();
+        btn.find(".dot").hide();
+        btn.find(".amount").hide();
+        btn.find(".btn-text").html("Processing");
+
+        let paymentData = {
+            cardholderName: $("#cardholderName").val().trim(),
+            cardNumber: $("#cardNumber").val().replace(/\s/g, ""),
+            expiry: $("#expiryDate").val(),
+            cvv: $("#cvv").val(),
+            amount: 14900
+        };
+
+        console.log(paymentData);
+
+       
+
 
     });
 
