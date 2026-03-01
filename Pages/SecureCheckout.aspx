@@ -53,7 +53,7 @@
             </div>
 
             <div class="payment-form">
-                 <div class="form-group">
+                 <div class="form-group payment-input">
                     <label>Cardholder Name</label>
                     <input id="cardholderName" type="text" placeholder="Enter name on card">
                      <small class="error-message"></small>
@@ -61,7 +61,7 @@
 
                
 
-                <div class="form-group">
+                <div class="form-group payment-input">
                     <label>Card Number</label>
 
                     <div class="input-wrapper">
@@ -77,9 +77,10 @@
 
 
                 <div class="row">
-                    <div class="col">
+                    <div class="col payment-input">
                         <label>Expiry Date</label>
-                        <input type="text" placeholder="MM/YY">
+                        <input id="expiryDate" type="text" placeholder="MM/YY">
+                         <small class="error-message"></small>
                     </div>
                     <div class="col">
                         <label>CVV</label>

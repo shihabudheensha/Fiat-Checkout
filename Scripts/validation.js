@@ -2,12 +2,12 @@
 
     function showError(input, message) {
         $(input).addClass("error");
-        $(input).closest(".form-group").find(".error-message").text(message);
+        $(input).closest(".payment-input").find(".error-message").text(message);
     }
 
     function clearError(input) {
         $(input).removeClass("error");
-        $(input).closest(".form-group").find(".error-message").text("");
+        $(input).closest(".payment-input").find(".error-message").text("");
     }
     function validateCardholder() {
         let value = $("#cardholderName").val().trim();
@@ -48,6 +48,35 @@
         clearError("#cardNumber");
         return true;
     }
+    function validateExpiry() {
+        let value = $("#expiryDate").val();
+
+        if (value === "") {
+            showError("#expiryDate", "Expiry date is required");
+            return false;
+        }
+
+        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(value)) {
+            showError("#expiryDate", "Invalid format (MM/YY)");
+            return false;
+        }
+
+        let parts = value.split("/");
+        let month = parseInt(parts[0]);
+        let year = parseInt("20" + parts[1]);
+
+        let today = new Date();
+        let expiryDate = new Date(year, month);
+
+        if (expiryDate <= today) {
+            showError("#expiryDate", "Card is expired");
+            return false;
+        }
+
+        clearError("#expiryDate");
+        return true;
+    }
+
 
 
     $("#cardholderName").on("blur", validateCardholder);
@@ -55,5 +84,8 @@
 
     $("#cardNumber").on("blur", validateCardNumber);
     $("#cardNumber").on("input", validateCardNumber);
+
+    $("#expiryDate").on("blur", validateExpiry);
+    $("#expiryDate").on("input", validateExpiry);
 
 });
