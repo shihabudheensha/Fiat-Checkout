@@ -32,10 +32,28 @@
         clearError("#cardholderName");
         return true;
     }
+    function validateCardNumber() {
+        let value = $("#cardNumber").val().replace(/\s/g, "");
+
+        if (value === "") {
+            showError("#cardNumber", "Card number is required");
+            return false;
+        }
+
+        if (!/^\d{16}$/.test(value)) {
+            showError("#cardNumber", "Card number must be 16 digits");
+            return false;
+        }
+
+        clearError("#cardNumber");
+        return true;
+    }
 
 
     $("#cardholderName").on("blur", validateCardholder);
     $("#cardholderName").on("input", validateCardholder);
 
+    $("#cardNumber").on("blur", validateCardNumber);
+    $("#cardNumber").on("input", validateCardNumber);
 
 });
