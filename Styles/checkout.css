@@ -218,3 +218,16 @@ input {
     position: relative;
     bottom: 4px;
 }
+
+/* validation */
+input.error {
+    border: 1px solid #ef4444;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+    padding: 4px 14px;
+}
