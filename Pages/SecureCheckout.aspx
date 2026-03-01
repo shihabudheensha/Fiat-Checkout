@@ -134,5 +134,7 @@
     </form>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../Scripts/validation.js"></script>
+    <script src="../Scripts/checkout.js"></script>
+
 </body>
 </html>
