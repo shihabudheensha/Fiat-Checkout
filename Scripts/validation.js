@@ -76,6 +76,22 @@
         clearError("#expiryDate");
         return true;
     }
+    function validateCVV() {
+        let value = $("#cvv").val();
+
+        if (value === "") {
+            showError("#cvv", "CVV is required");
+            return false;
+        }
+
+        if (!/^\d{3,4}$/.test(value)) {
+            showError("#cvv", "Invalid CVV");
+            return false;
+        }
+
+        clearError("#cvv");
+        return true;
+    }
 
 
 
@@ -87,5 +103,8 @@
 
     $("#expiryDate").on("blur", validateExpiry);
     $("#expiryDate").on("input", validateExpiry);
+
+    $("#cvv").on("blur", validateCVV);
+    $("#cvv").on("input", validateCVV);
 
 });
