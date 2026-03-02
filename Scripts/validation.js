@@ -121,6 +121,27 @@ function validateExpiry() {
     clearError("#expiryDate");
     return true;
 }
+function formatExpiry(e) {
+
+    let input = this;
+    let cursorPos = input.selectionStart;
+
+    let digits = input.value.replace(/\D/g, "").substring(0, 4);
+
+    // If deleting, don’t force slash at position 2
+    if (e.originalEvent &&
+        e.originalEvent.inputType === "deleteContentBackward") {
+
+        input.value = digits;
+        return;
+    }
+
+    if (digits.length >= 2) {
+        digits = digits.substring(0, 2) + "/" + digits.substring(2);
+    }
+
+    input.value = digits;
+}
 function validateCVV() {
     let value = $("#cvv").val();
 

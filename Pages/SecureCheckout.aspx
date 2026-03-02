@@ -79,7 +79,7 @@
                 <div class="row">
                     <div class="col payment-input">
                         <label>Expiry Date</label>
-                        <input id="expiryDate" type="text" placeholder="MM/YY">
+                        <input id="expiryDate" type="text" placeholder="MM/YY" maxlength="5">
                          <small class="error-message"></small>
                     </div>
                     <div class="col payment-input">

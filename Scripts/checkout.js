@@ -6,6 +6,8 @@
     $("#cardNumber").on("input", formatCardNumber);
 
     $("#expiryDate").on("blur", validateExpiry);
+    $("#expiryDate").on("input", formatExpiry);
+
     $("#cvv").on("blur", validateCVV);
 
     $("#paymentBtn").on("click", function (e) {
