@@ -38,19 +38,19 @@
                   <div class="summary-card">
                     <div class="summary-row">
                         <span>Transaction ID</span>
-                        <span>#123456</span>
+                        <span id="transactionId"></span>
                     </div>
                     <div class="summary-row">
                         <span>Amount Paid</span>
-                        <span>₹14,900</span>
+                        <span id="amountPaid"></span>
                     </div>
                     <div class="summary-row">
                         <span>Payment Method</span>
-                        <span>Card •••• 4242</span>
+                        <span id="maskedCard"></span>
                     </div>
                     <div class="summary-row">
                         <span>Date</span>
-                        <span>01 Mar 2026</span>
+                        <span id="paymentDate"></span>
                     </div>
                 </div>
 
@@ -66,6 +66,7 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="../Scripts/paymentSuccess.js"></script>
+       
     </form>
 </body>
 </html>

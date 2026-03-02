@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.OleDb;
 using System.Configuration;
+using System.Security.Cryptography;
 
 public partial class Pages_SecureCheckout : System.Web.UI.Page
 {
@@ -20,6 +21,7 @@ public partial class Pages_SecureCheckout : System.Web.UI.Page
                                         decimal amount)
     {
         string connString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        string transactionId = GenerateTransactionId();
 
         using (OleDbConnection conn = new OleDbConnection(connString))
         {
@@ -30,12 +32,13 @@ public partial class Pages_SecureCheckout : System.Web.UI.Page
             try
             {
                 string query = @"INSERT INTO Payments
-                                (CardholderName, CardNumber, Expiry, CVV, Amount, PaymentStatus, CreatedAt)
-                                VALUES (?, ?, ?, ?, ?, ?, ?);
+                                (TransactionId, CardholderName, CardNumber, Expiry, CVV, Amount, PaymentStatus, CreatedAt)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?);
                                 SELECT @@IDENTITY;";
 
                 using (OleDbCommand cmd = new OleDbCommand(query, conn, transaction))
                 {
+                    cmd.Parameters.AddWithValue("@TransactionId", transactionId);
                     cmd.Parameters.AddWithValue("@CardholderName", cardholderName);
                     cmd.Parameters.AddWithValue("@CardNumber", cardNumber);
                     cmd.Parameters.AddWithValue("@Expiry", expiry);
@@ -53,7 +56,8 @@ public partial class Pages_SecureCheckout : System.Web.UI.Page
                     return new
                     {
                         Status = "Success",
-                        PaymentId = insertedId
+                        PaymentId = insertedId,
+                        TransactionId = transactionId
                     };
                 }
             }
@@ -70,4 +74,19 @@ public partial class Pages_SecureCheckout : System.Web.UI.Page
             }
         }
     }
+    private static string GenerateTransactionId()
+    {
+        byte[] bytes = new byte[8]; // 8 bytes = 64 bit number
+
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(bytes);
+        }
+
+        long value = Math.Abs(BitConverter.ToInt64(bytes, 0));
+
+        // Ensure 12 digits
+        return (value % 900000000000 + 100000000000).ToString();
+    }
+
 }

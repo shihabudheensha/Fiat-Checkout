@@ -15,7 +15,7 @@
             if (result.Status === "Success") {
 
                 window.location.href =
-                    "../Pages/PaymentSuccess.aspx?id=" + result.PaymentId;
+                    "../Pages/PaymentSuccess.aspx?id=" + result.TransactionId;
 
             } else {
 

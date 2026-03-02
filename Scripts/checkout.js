@@ -32,7 +32,11 @@
 
         console.log(paymentData);
 
-         PayNow(paymentData);
+        setTimeout(function() {
+            PayNow(paymentData);
+        }, 500);
+
+         
 
 
     });
