@@ -6,8 +6,21 @@
         data: JSON.stringify(paymentData),
         dataType: "json",
         success: function (response) {
+           
+            console.log(response)
             hidePayLoader()
-            alert("Payment Successful ✅");
+
+            let result = response.d;
+
+            if (result.Status === "Success") {
+
+                window.location.href =
+                    "../Pages/PaymentSuccess.aspx?id=" + result.PaymentId;
+
+            } else {
+
+                alert("Payment Failed: " + result.Message);
+            }
 
         },
 

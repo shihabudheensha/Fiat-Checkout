@@ -17,7 +17,7 @@
 
         if (!(v1 && v2 && v3 && v4)) return;
 
-
+       
 
         // Loading state
         showPayLoader()
@@ -32,7 +32,7 @@
 
         console.log(paymentData);
 
-        PayNow(paymentData);
+         PayNow(paymentData);
 
 
     });

@@ -1,6 +1,10 @@
 ﻿using System;
-using System.Configuration;
+using System.Collections.Generic;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using System.Data.OleDb;
+using System.Configuration;
 
 public partial class Pages_SecureCheckout : System.Web.UI.Page
 {
@@ -8,9 +12,7 @@ public partial class Pages_SecureCheckout : System.Web.UI.Page
     {
 
     }
-
     [System.Web.Services.WebMethod]
-
     public static object ProcessPayment(string cardholderName,
                                         string cardNumber,
                                         string expiry,
